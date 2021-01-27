@@ -1,0 +1,33 @@
+==========hjcho on Linux===================================
+==========compilation=============================
+make: Nothing to be done for 'default'.
+==========testing=================================
+==========server outputs===================
+==========stdout==========
+timer: testing  ../multisrv in testdir on Linux ---------------
+==========stderr==========
+server using port 57519
+timer: received Interrupt
+timer: interrupted
+==========driver outputs===================
+driver: (version 2) concurrency = 19; iterations = 10000
+  0: completed 10000 iterations: connection wait time    0 ms, real time  170 ms, CPU time  120 ms
+  1: completed 10000 iterations: connection wait time    0 ms, real time  180 ms, CPU time  120 ms
+  2: completed 10000 iterations: connection wait time    0 ms, real time  160 ms, CPU time  120 ms
+  3: completed 10000 iterations: connection wait time    0 ms, real time  170 ms, CPU time  120 ms
+  4: completed 10000 iterations: connection wait time    0 ms, real time  340 ms, CPU time  120 ms
+  5: completed 10000 iterations: connection wait time    0 ms, real time  340 ms, CPU time  120 ms
+  6: completed 10000 iterations: connection wait time    0 ms, real time  340 ms, CPU time  120 ms
+  7: completed 10000 iterations: connection wait time    0 ms, real time  350 ms, CPU time  130 ms
+  8: completed 10000 iterations: connection wait time    0 ms, real time  500 ms, CPU time  120 ms
+  9: completed 10000 iterations: connection wait time    0 ms, real time  510 ms, CPU time  120 ms
+ 10: completed 10000 iterations: connection wait time    0 ms, real time  520 ms, CPU time  120 ms
+ 11: completed 10000 iterations: connection wait time    0 ms, real time  520 ms, CPU time  120 ms
+ 12: completed 10000 iterations: connection wait time    0 ms, real time  670 ms, CPU time  120 ms
+ 13: completed 10000 iterations: connection wait time    0 ms, real time  680 ms, CPU time  110 ms
+ 14: completed 10000 iterations: connection wait time    0 ms, real time  690 ms, CPU time  120 ms
+ 15: completed 10000 iterations: connection wait time    0 ms, real time  690 ms, CPU time  120 ms
+ 16: completed 10000 iterations: connection wait time    0 ms, real time  840 ms, CPU time  120 ms
+ 17: completed 10000 iterations: connection wait time    0 ms, real time  850 ms, CPU time  110 ms
+ 18: completed 10000 iterations: connection wait time    0 ms, real time  860 ms, CPU time  120 ms
+==========done====================================

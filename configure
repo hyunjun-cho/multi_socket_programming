@@ -1,0 +1,321 @@
+#!/bin/sh
+# an example of a hand-made configuration script
+
+# This is also an example of a shell-script written for the
+# standard UNIX (Bourne) shell.
+
+# The purpose of this shell script is to set up the following
+# files to reflect system-dependences for the system where this
+# script is run:
+
+# Config    --  local configuration definitions to be included by
+#               the make utility when it processes  Makefile
+# config.h  --  a header file to be included in C programs
+
+# The "autoconf" utility provides a more general (but harder to
+# understand) mechanism for this purpose.  The following is based
+# on the techniques of autconf, but has been simplified to improve
+# readability.
+
+echo "checking for system dependences"
+
+# remove old Config and config.h files
+
+rm -f Config config.h
+
+# create new empty Config and config.h files
+
+touch Config config.h
+
+# find out what characters we can use for newline control with echo
+
+if (echo "testing\c"; echo 1,2,3) | grep c >/dev/null; then
+  if (echo -n testing; echo 1,2,3) | sed s/-n/xn/ | grep xn >/dev/null; then
+    ac_n="" ac_c='
+' ac_t='	'
+  else
+    ac_n="-n" ac_c= ac_t=
+  fi
+else
+  ac_n="" ac_c='\c' ac_t=
+fi
+
+# A more general configure file might search around
+# for different C compilers and try different options.
+# Here, we just assume gcc is present and supports most of
+# options we want.
+
+CC=gcc
+CCOPTS="-Wall -pedantic -g -D_REENTRANT"
+
+# check whether this gcc supports "-pthread"
+
+# Pass the options we are using for the configuration
+# process on to make, via the file Config.
+
+echo ${ac_n} "checking whether gcc accepts -pthread... ${ac_c}"
+cat > conftest.c <<\EOF
+int main() {
+ return 0; }
+EOF
+if { (eval $CC $CCOPTS -pthread conftest.c $LIBS) 1>/dev/null 2>&1; }; then
+  pthread_ok=no
+else
+  pthread_ok=yes
+fi
+rm -f conftest*
+echo "${ac_t}${pthread_ok}"
+if test ${pthread_ok} = yes ; then
+   CCOPTS="${CCOPTS} -pthread"
+fi
+
+echo CCOPTS=$CCOPTS > Config
+echo CC=${CC} >> Config
+
+# Initialize config.h with the declarations and
+# include directives for the headers we want to use.
+
+cat > config.h <<\EOF
+#define _GNU_SOURCE
+#include <unistd.h>
+#include <errno.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+EOF
+
+# LIBS is the list of libraries we might need to link in.
+# It starts out null, and we concatenate on strings as necessary.
+
+LIBS=
+
+# We don't plan on using the system name for this program,
+# but the following illustrates how one might find it out.
+# In general, it is better to use specific feature-tests
+# rather than cases for various systems, since each OS has
+# many releases, and features change from one release to another.
+
+UNAME_SYSTEM=`uname -s`
+UNAME_RELEASE=`uname -r`
+echo SYSTEM/RELEASE = $UNAME_SYSTEM/$UNAME_RELEASE
+echo \#define SYSTEM $UNAME_SYSTEM >> config.h
+echo \#define RELEASE $UNAME_RELEASE >> config.h
+if test ${UNAME_SYSTEM} = SunOS; then
+echo \#define SunOS >> config.h
+fi
+
+# The following is an example of a shell case-statement.
+# It servers no useful purpose here.
+
+case ${UNAME_SYSTEM} in
+ HP-UX)
+   echo "Using Configuration for" ${UNAME_SYSTEM} ${UNAME_RELEASE};
+   ;;
+ SunOS)
+   echo "Using Configuration for" ${UNAME_SYSTEM} ${UNAME_RELEASE};
+   ;;
+ Linux)
+   echo "Using Configuration for" ${UNAME_SYSTEM} ${UNAME_RELEASE};
+   ;;
+ OSF1)
+   echo "Using Configuration for" ${UNAME_SYSTEM} ${UNAME_RELEASE};
+   ;;
+ IRIX*)
+   echo "Using Configuration for" ${UNAME_SYSTEM} ${UNAME_RELEASE};
+   ;;
+ AIX)
+   echo "Using Configuration for" ${UNAME_SYSTEM} ${UNAME_RELEASE};
+   ;;
+ *)
+   echo "No Configuration for ${UNAME_SYSTEM}. Using default.";
+   ;;
+esac; 
+
+# check for libraries we might need to link in
+
+echo ${ac_n} "checking what library we need for gethostbyname""... ${ac_c}"
+cat > conftest.c <<\EOF
+int main() {
+ gethostbyname();
+ return 0; }
+EOF
+if { (eval $CC $CCOPTS conftest.c $LIBS) 1>/dev/null 2>&1; }; then
+  needed_for_gethostbyname="none"
+elif { (eval $CC $CCOPTS conftest.c $LIBS -lresolv) 1>/dev/null 2>&1; }; then
+  needed_for_gethostbyname="-lresolv"
+elif { (eval $CC $CCOPTS conftest.c $LIBS -lnsl) 1>/dev/null 2>&1; }; then
+  needed_for_gethostbyname="-lnsl"
+else
+  echo "${ac_t}failed: gethostbyname"
+  exit -1;
+fi
+rm -f conftest*
+echo "${ac_t}${needed_for_gethostbyname}"
+if test ${needed_for_gethostbyname} != "none" ; then
+   LIBS="${LIBS} ${needed_for_gethostbyname}"
+fi
+
+echo ${ac_n} "checking what library we need for socket... ${ac_c}"
+cat > conftest.c <<\EOF
+int main() {
+ socket();
+ return 0; }
+EOF
+if { (eval $CC $CCOPTS conftest.c $LIBS) 1>/dev/null 2>&1; }; then
+  needed_for_socket="none" 
+elif { (eval $CC $CCOPTS conftest.c $LIBS -lsocket) 1>/dev/null 2>&1; }; then
+  needed_for_socket="-lsocket"
+else
+  echo "${ac_t}failed: socket"
+  exit -1;
+fi
+rm -f conftest*
+echo "${ac_t}${needed_for_socket}"
+if test ${needed_for_socket} != "none" ; then
+   LIBS="${LIBS} ${needed_for_socket}"
+fi
+
+echo ${ac_n} "checking whether we need -lposix4 for nanosleep...${ac_c}"
+cat > conftest.c <<\EOF
+int main() {
+ nanosleep();
+ return 0; }
+EOF
+if { (eval $CC $CCOPTS conftest.c $LIBS) 1>/dev/null 2>&1; }; then
+  need_libposix4=no
+else
+if { (eval $CC $CCOPTS conftest.c $LIBS -lposix4) 1>/dev/null 2>&1; }; then
+  need_libposix4=yes
+else
+  echo "${ac_t}failed: nanosleep"
+  exit -1;
+fi
+fi
+rm -f conftest*
+echo "${ac_t}$need_libposix4"
+if test ${need_libposix4} = yes ; then
+   LIBS="${LIBS} -lposix4"
+fi
+
+echo ${ac_n} "checking whether we need -lpthread for pthread_create""... ${ac_c}"
+cat > conftest.c <<\EOF
+int main() {
+ pthread_create();
+ return 0; }
+EOF
+if { (eval $CC $CCOPTS conftest.c $LIBS) 1>/dev/null 2>&1; }; then
+  need_libpthread=no
+elif { (eval $CC $CCOPTS conftest.c $LIBS -lpthread) 1>/dev/null 2>&1; }; then
+  need_libpthread=yes
+else
+  echo "${ac_t}failed: pthread_create"
+  exit -1;
+fi
+rm -f conftest*
+echo "${ac_t}$need_libpthread"
+if test $need_libpthread = yes ; then
+   LIBS="${LIBS} -lpthread"
+fi
+
+echo LIBS=${LIBS} >> Config
+
+# check for possible missing types
+
+echo ${ac_n} "checking if socklen_t defined""... ${ac_c}"
+cat > conftest.c <<\EOF
+#include "config.h"
+int main() {
+ socklen_t foo;
+ return 0; }
+EOF
+if { (eval $CC $CCOPTS conftest.c $LIBS) 1>/dev/null 2>&1; }; then
+  have_socklen_t=yes
+else
+  have_socklen_t=no
+fi
+rm -f conftest*
+echo " $have_socklen_t"
+if test $have_socklen_t = no; then
+# look for a substitute for socklen_t
+echo ${ac_n} "checking if socklen_t should be size_t""... ${ac_c}"
+cat > conftest.c <<\EOF
+#include "config.h"
+int main() {
+  struct sockaddr s;
+  size_t len;
+  sendto(1, NULL, 0, 0, &s, len);
+  return 0; }
+EOF
+if { (eval $CC $CCOPTS conftest.c $LIBS) 1>/dev/null 2>&1; }; then
+  use_size_t=yes
+else
+  use_size_t=no
+fi
+rm -f conftest*
+echo " $use_size_t"
+if test $use_size_t = yes ; then
+   cat >> config.h <<\EOF
+#define socklen_t size_t
+EOF
+else
+   cat >> config.h <<\EOF
+#define socklen_t int
+EOF
+fi
+fi
+
+echo ${ac_n} "checking if type int32_t is defined""... ${ac_c}"
+cat > conftest.c <<\EOF
+#include "config.h"
+int main() {
+ int32_t foo;
+ return 0; }
+EOF
+if { (eval $CC $CCOPTS conftest.c $LIBS) 1>/dev/null 2>&1; }; then
+  have_int32_t=yes
+else
+  have_int32_t=no
+fi
+rm -f conftest*
+echo " $have_int32_t"
+if test $have_int32_t = yes; then
+   cat >> config.h <<\EOF
+#define HAS_int32_t
+EOF
+fi
+echo ${ac_n} "checking spelling of uint32_t versus u_int32_t""... ${ac_c}"
+cat > conftest.c <<\EOF
+#include "config.h"
+int main() {
+ u_int32_t foo;
+ return 0; }
+EOF
+if { (eval $CC $CCOPTS conftest.c $LIBS) 1>/dev/null 2>&1; }; then
+  have_u_int32_t=yes
+else
+  have_u_int32_t=no
+fi
+rm -f conftest*
+if test $have_u_int32_t = yes; then
+   echo " u_int_32_t"
+   cat >> config.h <<\EOF
+#define uint32_t u_int32_t
+EOF
+else
+   echo " uint_32_t"
+fi
+rm a.out
+
+
+
+
+
+
+

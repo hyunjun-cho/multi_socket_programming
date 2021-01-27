@@ -1,0 +1,67 @@
+==========hjcho on Linux===================================
+==========compilation=============================
+make: Nothing to be done for 'default'.
+==========testing=================================
+==========server outputs===================
+==========stdout==========
+timer: testing  ../multisrv in testdir on Linux ---------------
+==========stderr==========
+server using port 41723
+timer: received Interrupt
+timer: interrupted
+timer: user 6419 ms system 4203 ms 
+timer: messages sent: 0 received: 0
+timer: max resident set: 1540 page faults: major 0 minor: 100
+==========driver outputs===================
+driver: (version 2) concurrency = 50; iterations = 10000
+  0: completed 10000 iterations: connection wait time    0 ms, real time  170 ms, CPU time  110 ms
+  1: completed 10000 iterations: connection wait time    0 ms, real time  180 ms, CPU time  120 ms
+  2: completed 10000 iterations: connection wait time    0 ms, real time  180 ms, CPU time  120 ms
+  3: completed 10000 iterations: connection wait time    0 ms, real time  170 ms, CPU time  120 ms
+  4: completed 10000 iterations: connection wait time    0 ms, real time  180 ms, CPU time  120 ms
+  5: completed 10000 iterations: connection wait time    0 ms, real time  180 ms, CPU time  120 ms
+  6: completed 10000 iterations: connection wait time    0 ms, real time  180 ms, CPU time  110 ms
+  7: completed 10000 iterations: connection wait time    0 ms, real time  180 ms, CPU time  110 ms
+  8: completed 10000 iterations: connection wait time    0 ms, real time  170 ms, CPU time  120 ms
+  9: completed 10000 iterations: connection wait time    0 ms, real time  340 ms, CPU time  110 ms
+ 10: completed 10000 iterations: connection wait time    0 ms, real time  340 ms, CPU time  120 ms
+ 11: completed 10000 iterations: connection wait time    0 ms, real time  340 ms, CPU time  110 ms
+ 12: completed 10000 iterations: connection wait time    0 ms, real time  340 ms, CPU time  120 ms
+ 13: completed 10000 iterations: connection wait time    0 ms, real time  350 ms, CPU time  120 ms
+ 14: completed 10000 iterations: connection wait time    0 ms, real time  350 ms, CPU time  120 ms
+ 15: completed 10000 iterations: connection wait time    0 ms, real time  340 ms, CPU time  110 ms
+ 16: completed 10000 iterations: connection wait time    0 ms, real time  350 ms, CPU time  120 ms
+ 17: completed 10000 iterations: connection wait time    0 ms, real time  350 ms, CPU time  120 ms
+ 18: completed 10000 iterations: connection wait time    0 ms, real time  510 ms, CPU time  130 ms
+ 19: completed 10000 iterations: connection wait time    0 ms, real time  500 ms, CPU time  110 ms
+ 20: completed 10000 iterations: connection wait time    0 ms, real time  500 ms, CPU time  110 ms
+ 21: completed 10000 iterations: connection wait time    0 ms, real time  510 ms, CPU time  120 ms
+ 22: completed 10000 iterations: connection wait time    0 ms, real time  510 ms, CPU time  120 ms
+ 23: completed 10000 iterations: connection wait time    0 ms, real time  520 ms, CPU time  110 ms
+ 24: completed 10000 iterations: connection wait time    0 ms, real time  520 ms, CPU time  120 ms
+ 25: completed 10000 iterations: connection wait time    0 ms, real time  520 ms, CPU time  110 ms
+ 26: completed 10000 iterations: connection wait time    0 ms, real time  520 ms, CPU time  120 ms
+ 27: completed 10000 iterations: connection wait time    0 ms, real time  670 ms, CPU time  120 ms
+ 28: completed 10000 iterations: connection wait time    0 ms, real time  680 ms, CPU time  120 ms
+ 29: completed 10000 iterations: connection wait time    0 ms, real time  680 ms, CPU time  110 ms
+ 30: completed 10000 iterations: connection wait time    0 ms, real time  680 ms, CPU time  120 ms
+ 31: completed 10000 iterations: connection wait time    0 ms, real time  690 ms, CPU time  120 ms
+ 32: completed 10000 iterations: connection wait time    0 ms, real time  670 ms, CPU time  110 ms
+ 33: completed 10000 iterations: connection wait time    0 ms, real time  670 ms, CPU time  110 ms
+ 34: completed 10000 iterations: connection wait time    0 ms, real time  680 ms, CPU time  110 ms
+ 35: completed 10000 iterations: connection wait time    0 ms, real time  690 ms, CPU time  120 ms
+ 36: completed 10000 iterations: connection wait time    0 ms, real time  820 ms, CPU time  120 ms
+ 37: completed 10000 iterations: connection wait time    0 ms, real time  830 ms, CPU time  120 ms
+ 38: completed 10000 iterations: connection wait time    0 ms, real time  840 ms, CPU time  110 ms
+ 39: completed 10000 iterations: connection wait time    0 ms, real time  830 ms, CPU time  120 ms
+ 40: completed 10000 iterations: connection wait time    0 ms, real time  840 ms, CPU time  120 ms
+ 41: completed 10000 iterations: connection wait time    0 ms, real time  840 ms, CPU time  120 ms
+ 42: completed 10000 iterations: connection wait time    0 ms, real time  850 ms, CPU time  120 ms
+ 43: completed 10000 iterations: connection wait time    0 ms, real time  850 ms, CPU time  110 ms
+ 44: completed 10000 iterations: connection wait time    0 ms, real time  860 ms, CPU time  110 ms
+ 45: completed 10000 iterations: connection wait time    0 ms, real time  990 ms, CPU time  110 ms
+ 46: completed 10000 iterations: connection wait time    0 ms, real time 1000 ms, CPU time  120 ms
+ 47: completed 10000 iterations: connection wait time    0 ms, real time 1000 ms, CPU time  120 ms
+ 48: completed 10000 iterations: connection wait time    0 ms, real time 1010 ms, CPU time  110 ms
+ 49: completed 10000 iterations: connection wait time    0 ms, real time 1010 ms, CPU time  110 ms
+==========done====================================

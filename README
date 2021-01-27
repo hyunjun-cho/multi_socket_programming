@@ -1,0 +1,27 @@
+This code has been tested (though not extensively) on Linux,
+SunOS, and Mac OS (Darwin).  I did the primary development and
+testing on my MacBook.
+
+Ted Baker
+February 2015
+
+CONTENTS
+
+Makefile
+configure    - configuration script; needs to be executed again when you change operating systems 
+               generates files Config and config.h
+echosrv.c    - echo server (the program you will work on)
+echocli.c    - client test program
+echolib.h    - header for echolib.c
+echolib.c    - shared code, used by echocli.c and echosrv.c
+submitP4.sh  - script to submit program
+usleep.c     - usleep implementation used by testone, since SunOS doesn't provide it
+
+not necessary, but may be provided later:
+
+testone      - a script to execute driver
+driver.c     - a test driver for multisrv (sends multiple concurrent streams)
+timer.c      - a test harness for multisrv (checks resource usage)
+
+results.sample  contains log files from executing "./testone 2" and "./testone 4" on SunOS, Linux, and Darwin
+
